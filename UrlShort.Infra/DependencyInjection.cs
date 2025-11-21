@@ -23,7 +23,7 @@ public static class DependencyInjection
             options.UseMongoDB(mongoClient, mongoDatabaseName));
 
         #region UrlShortService
-        services.AddScoped<IUrlShortService, UrlShorService>();
+        services.AddScoped<IUrlShortService, UrlShortService>();
         services.AddScoped<IUrlShortRepository, UrlShortRepository>();
         #endregion
         

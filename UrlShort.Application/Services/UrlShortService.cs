@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using UrlShort.Application.Dto;
 using UrlShort.Application.Interfaces;
 using UrlShort.Application.Mappers;
@@ -5,15 +6,15 @@ using UrlShort.Domain.Interfaces;
 
 namespace UrlShort.Application.Services;
 
-public class UrlShorService : IUrlShortService
+public class UrlShortService : IUrlShortService
 {
     private readonly IUrlShortRepository _urlShortRepository;
-    private static readonly char[] BASE62ALPHABET =
-        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
+    private readonly char[] BASE62ALPHABET;
 
-    public UrlShorService(IUrlShortRepository urlShortRepository)
+    public UrlShortService(IUrlShortRepository urlShortRepository, IConfiguration configuration)
     {
         _urlShortRepository = urlShortRepository;
+        BASE62ALPHABET = configuration.GetSection("Base62Alphabet").Value.ToCharArray();
     }
     
     public async Task<ApiResponse<UrlShortDto>> ShortenUrl(ShortenUrlDto dto)
